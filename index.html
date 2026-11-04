@@ -38,6 +38,25 @@
       <p class="eyebrow">START HERE</p><h2>Your next opportunity could be one discovery away.</h2>
       <p>ACADEX is a growing student ecosystem. This starter is a visual prototype; accounts, messaging and live listings will be added in later engineering milestones.</p>
       <button class="primary-btn" id="notifyBtn">Join the journey <span>→</span></button>
+      <!-- ACADEX Authentication Section -->
+<section class="section" id="auth-section" style="border-top: 1px solid rgba(212, 175, 55, 0.2); padding: 40px 20px; text-align: left;">
+  <div class="section-heading">
+    <span class="eyebrow">GET STARTED</span>
+    <h2>Join the Ecosystem</h2>
+  </div>
+  <div style="max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+    <input type="text" id="authName" placeholder="Full Name" style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px;">
+    <input type="text" id="authUniversity" placeholder="University (e.g. YABATECH)" style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px;">
+    <input type="email" id="authEmail" placeholder="Student Email" style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px;">
+    <input type="password" id="authPassword" placeholder="Password" style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px;">
+    <div style="display: flex; gap: 10px;">
+      <button id="signUpBtn" class="primary-btn" style="flex: 1; cursor: pointer;">Register</button>
+      <button id="signInBtn" style="flex: 1; padding: 12px; background: transparent; border: 1px solid var(--accent, #d4af37); color: var(--accent, #d4af37); border-radius: 8px; cursor: pointer; font-weight: bold;">Login</button>
+    </div>
+    <div id="authMessage" style="font-size: 14px; margin-top: 10px; color: #d4af37;"></div>
+  </div>
+</section>
+
     </section>
     <footer><span class="brand small"><span class="brand-mark">A</span> ACADEX</span><span>Learn. Discover. Create. Connect. Build.</span></footer>
   </main>
