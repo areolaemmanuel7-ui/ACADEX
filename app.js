@@ -46,10 +46,11 @@ signUpBtn?.addEventListener('click', async () => {
     return;
   }
 
-  const fullName = document.getElementById('authName')?.value.trim();
-  const university = document.getElementById('authUniversity')?.value.trim();
-  const email = document.getElementById('authEmail')?.value.trim();
-  const password = document.getElementById('authPassword')?.value.trim();
+    const fullName = document.getElementById('authName').value.trim();
+  const university = document.getElementById('authUniversity').value.trim();
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value.trim();
+
 
   if (!fullName || !university || !email || !password) {
     authMessage.style.color = '#ff4d4d';
