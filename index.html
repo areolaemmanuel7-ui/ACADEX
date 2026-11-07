@@ -1,580 +1,132 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ACADEX | Everything Campus. One Ecosystem.</title>
-  <meta name="description" content="Central digital destination for Nigerian students, academic support, talent exchange, and campus opportunities." />
-  
-  <!-- PWA Meta Tags -->
-  <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#0d0d0d" />
-  <link rel="apple-touch-icon" href="icon-192.png" />
-
-  <!-- Supabase JS Client (v2) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    /* ==========================================================================
-       ACADEX DESIGN SYSTEM: Premium Black & Gold Theme
-       ========================================================================== */
-    :root {
-      --bg-main: #0d0d0d;
-      --bg-card: #171717;
-      --bg-card-hover: #222222;
-      --gold-primary: #d4af37;
-      --gold-light: #f3e5ab;
-      --gold-dark: #aa820a;
-      --text-main: #f5f5f5;
-      --text-muted: #a3a3a3;
-      --border-color: #2a2a2a;
-      --danger-color: #ef4444;
-      --success-color: #10b981;
-      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      font-family: var(--font-family);
-      line-height: 1.6;
-      padding-bottom: 70px; /* Space for mobile nav */
-    }
-
-    a {
-      color: var(--gold-primary);
-      text-decoration: none;
-    }
-
-    /* HEADER & NAVIGATION */
-    header {
-      background-color: rgba(13, 13, 13, 0.95);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      backdrop-filter: blur(8px);
-    }
-
-    .brand-logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      color: var(--gold-primary);
-    }
-
-    .brand-logo span {
-      color: var(--text-main);
-      font-weight: 300;
-      font-size: 0.9rem;
-    }
-
-    .user-actions button {
-      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-      color: #000;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.85rem;
-    }
-
-    /* CONTAINER & GRID */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .hero-section {
-      text-align: center;
-      padding: 40px 10px;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 25px;
-    }
-
-    .hero-section h1 {
-      font-size: 2.2rem;
-      color: var(--gold-primary);
-      margin-bottom: 8px;
-    }
-
-    .hero-section p {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    /* GRID MODULES */
-    .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .module-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 20px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .module-card:hover {
-      border-color: var(--gold-primary);
-      transform: translateY(-2px);
-    }
-
-    .module-card h3 {
-      color: var(--gold-primary);
-      margin-bottom: 8px;
-      font-size: 1.2rem;
-    }
-
-    .module-card p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 15px;
-    }
-
-    .module-card button {
-      background-color: transparent;
-      border: 1px solid var(--gold-primary);
-      color: var(--gold-primary);
-      padding: 6px 12px;
-      border-radius: 5px;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    /* AUTH MODAL & FORMS */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .modal-card {
-      background: var(--bg-card);
-      border: 1px solid var(--gold-primary);
-      border-radius: 12px;
-      width: 100%;
-      max-width: 400px;
-      padding: 25px;
-      position: relative;
-    }
-
-    .modal-card h2 {
-      color: var(--gold-primary);
-      margin-bottom: 15px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 5px;
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 10px;
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      color: var(--text-main);
-      font-size: 0.95rem;
-    }
-
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--gold-primary);
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-      color: #000;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 12px;
-      right: 15px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    /* AI ASSISTANT CONSOLE */
-    .ai-console {
-      margin-top: 30px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 20px;
-    }
-
-    .ai-console h3 {
-      color: var(--gold-primary);
-      margin-bottom: 10px;
-    }
-
-    .ai-output {
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 15px;
-      min-height: 80px;
-      font-size: 0.9rem;
-      color: var(--text-main);
-      margin-top: 10px;
-      white-space: pre-wrap;
-    }
-
-    /* MOBILE NAVIGATION */
-    .mobile-nav {
-      position: fixed;
-      bottom: 0; left: 0; width: 100%;
-      background-color: var(--bg-card);
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 0;
-      z-index: 100;
-    }
-
-    .mobile-nav item {
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      text-align: center;
-      text-decoration: none;
-    }
-
-    .mobile-nav item.active {
-      color: var(--gold-primary);
-    }
-
-    .alert-box {
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
-      display: none;
-    }
-    .alert-error { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid var(--danger-color); }
-    .alert-success { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid var(--success-color); }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="ACADEX — the Nigerian student ecosystem for academics, opportunities, talent and campus life.">
+  <title>ACADEX — Your Campus. Your Future.</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="app.js" defer></script>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="brand-logo">ACADEX <span>NG</span></div>
-    <div class="user-actions" id="auth-actions">
-      <button onclick="openModal('auth-modal')">Sign In / Register</button>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" aria-label="ACADEX home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+      <nav class="main-nav" id="mainNav">
+        <a href="#opportunities">Opportunities</a>
+        <a href="#library">Library</a>
+        <a href="#talent">Talent</a>
+        <a href="#campus">Campus Life</a>
+        <a href="#career">Career</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="button button-quiet" data-open-auth="login">Log in</button>
+        <button class="button button-gold" data-open-auth="signup">Join ACADEX</button>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
-  <div class="container">
-    <div class="hero-section">
-      <h1>EVERYTHING CAMPUS. ONE ECOSYSTEM.</h1>
-      <p>Academic Support • Student Opportunities • Micro-Freelancing • Campus Commerce</p>
-    </div>
-
-    <!-- MODULES GRID (8 SECTIONS) -->
-    <div class="modules-grid">
-      <!-- 1. Opportunity Hub -->
-      <div class="module-card">
-        <h3>1. Opportunity Hub</h3>
-        <p>Scholarships, internships, academic calls, and student competitions.</p>
-        <button onclick="handleModuleClick('Opportunity Hub')">Explore Opportunities</button>
-      </div>
-
-      <!-- 2. Talent Exchange -->
-      <div class="module-card">
-        <h3>2. Talent Exchange</h3>
-        <p>Connect with student coders, designers, writers, and skill providers.</p>
-        <button onclick="handleModuleClick('Talent Exchange')">Find Talent</button>
-      </div>
-
-      <!-- 3. Campus Library -->
-      <div class="module-card">
-        <h3>3. Campus Library</h3>
-        <p>Structured directories for course notes, study resources, and past questions.</p>
-        <button onclick="handleModuleClick('Campus Library')">Access Resources</button>
-      </div>
-
-      <!-- 4. Innovation & Research -->
-      <div class="module-card">
-        <h3>4. Innovation & Research</h3>
-        <p>Student project showcases, research collaborations, and idea labs.</p>
-        <button onclick="handleModuleClick('Innovation & Research')">View Research</button>
-      </div>
-
-      <!-- 5. Campus Marketplace -->
-      <div class="module-card">
-        <h3>5. Campus Marketplace</h3>
-        <p>Verified student-to-student commerce for books, tech, and gear.</p>
-        <button onclick="handleModuleClick('Campus Marketplace')">Open Market</button>
-      </div>
-
-      <!-- 6. Events & Communities -->
-      <div class="module-card">
-        <h3>6. Events & Communities</h3>
-        <p>Discover campus clubs, webinars, workshops, and official updates.</p>
-        <button onclick="handleModuleClick('Events & Communities')">Join Communities</button>
-      </div>
-
-      <!-- 7. Career Centre -->
-      <div class="module-card">
-        <h3>7. Career Centre</h3>
-        <p>CV builder, portfolio reviews, job readiness, and employer matching.</p>
-        <button onclick="handleModuleClick('Career Centre')">Career Resources</button>
-      </div>
-
-      <!-- 8. Campus Connect -->
-      <div class="module-card">
-        <h3>8. Campus Connect</h3>
-        <p>Direct peer networking, moderated study groups, and campus chat.</p>
-        <button onclick="handleModuleClick('Campus Connect')">Start Chatting</button>
-      </div>
-    </div>
-
-    <!-- GEMINI ACADEMIC ASSISTANT CONSOLE -->
-    <div class="ai-console">
-      <h3>Gemini Academic Assistant Engine</h3>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
-        AI assistance integrated for coursework summary and academic project guidance.
-      </p>
-      <div class="form-group">
-        <input type="text" id="ai-prompt" placeholder="Ask your academic research or course question..." />
-      </div>
-      <button class="btn-submit" style="width: auto; padding: 8px 20px;" onclick="runAcademicAI()">Ask Assistant</button>
-      <div class="ai-output" id="ai-output-box">Assistant ready for queries...</div>
-    </div>
-  </div>
-
-  <!-- AUTHENTICATION MODAL -->
-  <div class="modal-overlay" id="auth-modal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeModal('auth-modal')">&times;</button>
-      <h2 id="modal-title">Student Access</h2>
-      
-      <div id="auth-alert" class="alert-box"></div>
-
-      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
-        <div class="form-group">
-          <label for="auth-email">Campus Email</label>
-          <input type="email" id="auth-email" placeholder="student@yabatech.edu.ng" required />
+  <main id="home">
+    <section class="hero container">
+      <div class="hero-copy">
+        <p class="eyebrow">THE NIGERIAN STUDENT ECOSYSTEM</p>
+        <h1>Your campus.<br><span class="gold">Your future.</span></h1>
+        <p class="hero-lead">One connected space for Nigerian students to learn, discover opportunities, showcase skills, build connections and move forward.</p>
+        <div class="hero-actions">
+          <a class="button button-gold" href="#opportunities">Explore ACADEX <span aria-hidden="true">↗</span></a>
+          <button class="button button-outline" data-open-auth="signup">Create student profile</button>
         </div>
-        <div class="form-group">
-          <label for="auth-password">Password</label>
-          <input type="password" id="auth-password" placeholder="••••••••" required />
-        </div>
-        
-        <div class="form-group" id="full-name-group">
-          <label for="auth-fullname">Full Name</label>
-          <input type="text" id="auth-fullname" placeholder="Emmanuel" />
-        </div>
+        <div class="hero-proof"><span class="proof-dot"></span> Built around the full student experience</div>
+      </div>
+      <div class="hero-visual" aria-label="ACADEX student ecosystem overview">
+        <div class="visual-glow"></div>
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="orbit-core"><span class="core-a">A</span><strong>ACADEX</strong><small>STUDENT ECOSYSTEM</small></div>
+        <div class="orbit-tag tag-one">ACADEMICS</div>
+        <div class="orbit-tag tag-two">OPPORTUNITIES</div>
+        <div class="orbit-tag tag-three">TALENT</div>
+        <div class="orbit-tag tag-four">CAMPUS LIFE</div>
+      </div>
+    </section>
 
-        <div class="form-group" id="institution-group">
-          <label for="auth-institution">Institution</label>
-          <select id="auth-institution">
-            <option value="Yaba College of Technology">Yaba College of Technology (YABATECH)</option>
-            <option value="University of Lagos">University of Lagos (UNILAG)</option>
-            <option value="Lagos State University">Lagos State University (LASU)</option>
-            <option value="Other">Other Campus</option>
-          </select>
-        </div>
+    <section class="stats-strip">
+      <div class="container stats-grid">
+        <div><strong>01</strong><span>Student-first</span></div>
+        <div><strong>02</strong><span>Multi-campus vision</span></div>
+        <div><strong>03</strong><span>Opportunity-led</span></div>
+        <div><strong>04</strong><span>Built to grow</span></div>
+      </div>
+    </section>
 
-        <button type="submit" class="btn-submit" id="auth-btn-label">Sign Up / Sign In</button>
+    <section class="section container" id="opportunities">
+      <div class="section-heading"><div><p class="eyebrow">MOVE FORWARD</p><h2>Opportunity <span class="gold">Hub</span></h2></div><p>Discover opportunities that can take your education and career further.</p></div>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-icon">✦</span><h3>Scholarships & Grants</h3><p>Find funding opportunities and educational support.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
+        <article class="feature-card"><span class="feature-icon">⌁</span><h3>Internships & Jobs</h3><p>Discover work experience, internships and entry-level roles.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
+        <article class="feature-card"><span class="feature-icon">◇</span><h3>Competitions & Programs</h3><p>Find challenges, fellowships, bootcamps and development programs.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="library">
+      <div class="container split-section">
+        <div><p class="eyebrow">LEARN WITHOUT LIMITS</p><h2>Academic <span class="gold">Library</span></h2><p class="section-lead">A structured academic resource directory for students across Nigerian universities — organised around institutions, departments and courses.</p><ul class="check-list"><li>Course resources and study materials</li><li>Past questions and revision resources</li><li>Research guidance and academic references</li><li>Educational videos and learning links</li></ul><p class="small-note">Resources should be uploaded with permission or linked from legitimate sources.</p></div>
+        <div class="library-panel"><div class="panel-top"><span>ACADEMIC LIBRARY</span><span class="panel-status">RESOURCE DIRECTORY</span></div><div class="library-search"><span>⌕</span><span>Search courses, departments or resources</span></div><div class="course-row"><span class="course-icon">01</span><div><b>Course materials</b><small>Organised learning resources</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">02</span><div><b>Past questions</b><small>Revision and exam preparation</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">03</span><div><b>Research resources</b><small>Guides, references and learning links</small></div><span class="row-arrow">↗</span></div></div>
+      </div>
+    </section>
+
+    <section class="section container" id="talent">
+      <div class="section-heading"><div><p class="eyebrow">SKILLS MEET OPPORTUNITY</p><h2>Talent <span class="gold">Exchange</span></h2></div><p>Help students turn their abilities into experience, collaboration and professional growth.</p></div>
+      <div class="talent-grid">
+        <article class="talent-card"><span>⌘</span><h3>Coders & Developers</h3><p>Showcase projects, find collaborators and join technical teams.</p></article>
+        <article class="talent-card"><span>▧</span><h3>Graphic Designers</h3><p>Display creative work and connect with people who need design skills.</p></article>
+        <article class="talent-card"><span>✎</span><h3>Writers & Researchers</h3><p>Build a portfolio and collaborate on writing and research projects.</p></article>
+        <article class="talent-card"><span>▶</span><h3>Content Creators</h3><p>Share educational content and connect with other creators.</p></article>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="campus">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">MORE THAN THE CLASSROOM</p><h2>Campus <span class="gold">Life</span></h2></div><p>Connect with the wider activities and services that make up university life.</p></div>
+        <div class="campus-grid">
+          <article class="campus-card"><span>◎</span><h3>Campus Connect</h3><p>Student networking, communities and peer connections.</p></article>
+          <article class="campus-card"><span>▤</span><h3>Events & Communities</h3><p>Campus events, student groups and shared interests.</p></article>
+          <article class="campus-card"><span>⌂</span><h3>Campus Marketplace</h3><p>A directory for student businesses, products and services.</p></article>
+          <article class="campus-card"><span>⌖</span><h3>Innovation & Research</h3><p>Showcase ideas, projects, research and collaboration.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="career">
+      <div class="career-banner"><div><p class="eyebrow">PREPARE FOR WHAT'S NEXT</p><h2>Build your path<br><span class="gold">beyond campus.</span></h2><p>Career development, professional portfolios, mentorship and connections to the world of work.</p></div><div class="career-mark">A<span>↗</span></div></div>
+    </section>
+
+    <section class="section container" id="join">
+      <div class="join-panel"><p class="eyebrow">THE FOUNDATION STARTS HERE</p><h2>Be part of the <span class="gold">ACADEX</span> ecosystem.</h2><p>Create a student profile to begin exploring the platform as it develops.</p><button class="button button-gold" data-open-auth="signup">Create your profile ↗</button><p class="small-note">ACADEX is being developed in phases. Some areas are currently previews and may not yet contain live listings or transactions.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><a class="brand" href="#home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a><p>Learning. Opportunity. Talent. Campus.</p><span>© <span id="year"></span> ACADEX</span></div></footer>
+
+  <div class="modal-backdrop" id="authModal" hidden>
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <button class="modal-close" id="closeAuth" aria-label="Close">×</button>
+      <p class="eyebrow">ACADEX STUDENT ACCOUNT</p><h2 id="authTitle">Join the ecosystem</h2>
+      <p class="auth-intro" id="authIntro">Create your student account to get started.</p>
+      <form id="authForm">
+        <label id="nameLabel">Full name<input id="fullName" autocomplete="name" placeholder="Your full name"></label>
+        <label id="universityLabel">University / institution<input id="university" placeholder="e.g. Yaba College of Technology"></label>
+        <label>Email address<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <label>Password<input id="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required></label>
+        <button class="button button-gold auth-submit" id="authSubmit" type="submit">Create account</button>
+        <p class="form-message" id="authMessage" role="status"></p>
       </form>
-    </div>
+      <p class="auth-switch" id="authSwitch">Already registered? <button type="button" data-switch-auth="login">Log in</button></p>
+      <p class="small-note">Account creation requires the ACADEX Supabase project to be configured. Never enter a password unless you trust this website.</p>
+    </section>
   </div>
-
-  <!-- MOBILE NAVIGATION BAR -->
-  <nav class="mobile-nav">
-    <a href="#" class="mobile-nav item active">Home</a>
-    <a href="#" class="mobile-nav item" onclick="handleModuleClick('Opportunity Hub')">Opportunities</a>
-    <a href="#" class="mobile-nav item" onclick="handleModuleClick('Campus Library')">Library</a>
-    <a href="#" class="mobile-nav item" onclick="openModal('auth-modal')">Profile</a>
-  </nav>
-
-  <!-- ACADEX CORE APPLICATION SCRIPT -->
-  <script>
-    /* ==========================================================================
-       SUPABASE FOUNDATION CONFIGURATION
-       ========================================================================== */
-    const SUPABASE_URL = "https://zhfgmtqnufbzbwgobqms.supabase.co";
-    // NOTE: Only the public/anon key should be placed here.
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpoZmdtdHFudWZiemJ3Z29icW1zIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA4MTkyOTMsImV4cCI6MjA0NjM5NTI5M30.YOUR_PUBLISHABLE_ANON_KEY_HERE";
-
-    // Initialize Supabase Client
-    const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
-
-    /* ==========================================================================
-       AUTHENTICATION & USER PROFILE CONTROLLER
-       ========================================================================== */
-    async function handleAuthSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById("auth-email").value;
-      const password = document.getElementById("auth-password").value;
-      const fullName = document.getElementById("auth-fullname").value;
-      const institution = document.getElementById("auth-institution").value;
-      const alertBox = document.getElementById("auth-alert");
-
-      alertBox.style.display = "none";
-
-      if (!supabase) {
-        showAlert("Supabase SDK failed to load. Check internet access.", "error");
-        return;
-      }
-
-      // Try signing up first
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-            institution: institution
-          }
-        }
-      });
-
-      if (signUpError) {
-        // If user exists, attempt sign in
-        if (signUpError.message.includes("already registered")) {
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-          if (signInError) {
-            showAlert(signInError.message, "error");
-          } else {
-            showAlert("Signed in successfully!", "success");
-            setTimeout(() => closeModal("auth-modal"), 1200);
-            checkSession();
-          }
-        } else {
-          showAlert(signUpError.message, "error");
-        }
-      } else {
-        showAlert("Registration successful! Check email for verification link.", "success");
-        setTimeout(() => closeModal("auth-modal"), 1500);
-        checkSession();
-      }
-    }
-
-    async function checkSession() {
-      if (!supabase) return;
-      const { data: { session } } = await supabase.auth.getSession();
-      const authActions = document.getElementById("auth-actions");
-
-      if (session) {
-        authActions.innerHTML = `
-          <span style="font-size:0.85rem; margin-right:10px; color:var(--gold-light);">${session.user.email}</span>
-          <button onclick="handleSignOut()">Sign Out</button>
-        `;
-      } else {
-        authActions.innerHTML = `<button onclick="openModal('auth-modal')">Sign In / Register</button>`;
-      }
-    }
-
-    async function handleSignOut() {
-      if (supabase) {
-        await supabase.auth.signOut();
-        checkSession();
-      }
-    }
-
-    /* ==========================================================================
-       GEMINI ACADEMIC ENGINE SERVICE INTEGRATION
-       ========================================================================== */
-    async function runAcademicAI() {
-      const promptInput = document.getElementById("ai-prompt").value;
-      const outputBox = document.getElementById("ai-output-box");
-
-      if (!promptInput.trim()) {
-        outputBox.innerText = "Please input a valid academic question.";
-        return;
-      }
-
-      outputBox.innerText = "Processing request with Gemini Academic Engine...";
-
-      try {
-        // Mock fallback AI pipeline response / actual endpoint dispatch
-        setTimeout(() => {
-          outputBox.innerText = `[ACADEX Gemini Response]: Academic outline generated for query: "${promptInput}". Connect active GEMINI_ACADEX_API_KEY environment variable to retrieve full generative models on server side.`;
-        }, 1000);
-      } catch (err) {
-        outputBox.innerText = "Error contacting Gemini engine: " + err.message;
-      }
-    }
-
-    /* ==========================================================================
-       UI INTERACTION & MODAL HELPERS
-       ========================================================================== */
-    function openModal(id) {
-      document.getElementById(id).style.display = "flex";
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).style.display = "none";
-    }
-
-    function showAlert(msg, type) {
-      const alertBox = document.getElementById("auth-alert");
-      alertBox.className = `alert-box alert-${type}`;
-      alertBox.innerText = msg;
-      alertBox.style.display = "block";
-    }
-
-    function handleModuleClick(moduleName) {
-      alert(`[${moduleName}] UI view loaded. Connect backend tables to render real-time listings.`);
-    }
-
-    /* ==========================================================================
-       PROGRESSIVE WEB APP (PWA) SERVICE WORKER REGISTRATION
-       ========================================================================== */
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('ACADEX Service Worker registered: ', reg.scope))
-          .catch(err => console.log('Service Worker registration failed: ', err));
-      });
-    }
-
-    // Run check on page load
-    document.addEventListener("DOMContentLoaded", checkSession);
-  </script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
