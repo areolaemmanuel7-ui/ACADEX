@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090909">
   <meta name="description" content="ACADEX — the Nigerian student ecosystem for academics, opportunities, talent and campus life.">
-  <title>ACADEX — Your Campus. Your Future.</title>
+  <title>ACADEX 2.2 — Your Campus. Your Future.</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
@@ -81,8 +81,26 @@
     </section>
     <section class="profile-strip">
       <div><span class="profile-label">UNIVERSITY</span><strong id="profileUniversity">—</strong></div>
+      <div><span class="profile-label">FACULTY</span><strong id="profileFaculty">Not added</strong></div>
       <div><span class="profile-label">DEPARTMENT</span><strong id="profileDepartment">—</strong></div>
-      <div><span class="profile-label">LEVEL</span><strong id="profileLevel">—</strong></div>
+      <div><span class="profile-label">ACADEMIC LEVEL</span><strong id="profileLevel">—</strong></div>
+      <div><span class="profile-label">CAMPUS LOCATION</span><strong id="profileCampus">Not added</strong></div>
+      <div><span class="profile-label">INTERESTS</span><strong id="profileInterests">Not added</strong></div>
+    </section>
+    <div class="profile-actions"><button class="button button-outline" id="editProfileBtn" type="button">Edit student profile</button></div>
+    <section id="profileEditor" class="profile-editor hidden" aria-labelledby="profileEditorTitle">
+      <div class="profile-editor-heading"><div><p class="eyebrow">YOUR ACADEX IDENTITY</p><h2 id="profileEditorTitle">Student profile</h2><p class="small-note">Keep your academic details and interests up to date. Email confirmation does not independently verify university enrolment.</p></div></div>
+      <form id="profileForm" class="profile-form">
+        <label>Full name<input id="editFullName" maxlength="120" required></label>
+        <label>University / institution<input id="editUniversity" maxlength="160" required></label>
+        <label>Faculty<input id="editFaculty" maxlength="120" placeholder="e.g. Environmental Studies"></label>
+        <label>Department<input id="editDepartment" maxlength="120" required></label>
+        <label>Academic level<select id="editAcademicLevel" required><option value="">Select your level</option><option>ND 1</option><option>ND 2</option><option>HND 1</option><option>HND 2</option><option>100 Level</option><option>200 Level</option><option>300 Level</option><option>400 Level</option><option>500 Level</option><option>Postgraduate</option><option>Other</option></select></label>
+        <label>Campus location<input id="editCampusLocation" maxlength="160" placeholder="e.g. YABATECH, Yaba, Lagos"></label>
+        <label class="profile-wide">Interests <span class="field-hint">Separate interests with commas</span><input id="editInterests" maxlength="500" placeholder="e.g. GIS, coding, research, design"></label>
+        <div class="profile-form-actions"><button class="button button-gold" id="saveProfileBtn" type="submit">Save profile</button><button class="button button-quiet" id="cancelProfileBtn" type="button">Cancel</button></div>
+        <p class="form-message profile-form-message" id="profileMessage" role="status" aria-live="polite"></p>
+      </form>
     </section>
     <div class="section-heading dashboard-section-heading"><div><p class="eyebrow">YOUR ACADEMIC ECOSYSTEM</p><h2>Explore your <span class="gold">ACADEX</span></h2></div><p>Choose a space to get started.</p></div>
     <div class="dashboard-grid" id="dashboardGrid">

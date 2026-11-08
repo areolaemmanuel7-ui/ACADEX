@@ -14,6 +14,12 @@ create table if not exists public.student_profiles (
   updated_at timestamptz not null default now()
 );
 
+-- ACADEX 2.2: additive profile fields. Safe to run on an existing table.
+alter table public.student_profiles
+  add column if not exists faculty text,
+  add column if not exists campus_location text,
+  add column if not exists interests text[] not null default '{}';
+
 alter table public.student_profiles enable row level security;
 
 drop policy if exists "Authenticated students can view profiles" on public.student_profiles;

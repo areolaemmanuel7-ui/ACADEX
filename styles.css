@@ -13,3 +13,25 @@
 @media(max-width:850px){.main-nav{gap:12px}.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.talent-grid,.campus-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-visual{right:-5%;opacity:.7}}
 @media(max-width:650px){.container{width:min(100% - 28px,1180px)}.site-header{height:65px}.nav-wrap{gap:9px}.menu-toggle{display:block}.main-nav{display:none;position:absolute;top:64px;right:12px;left:12px;background:#171512;border:1px solid var(--line);border-radius:12px;padding:15px;flex-direction:column;align-items:stretch;gap:17px}.main-nav.open{display:flex}.nav-actions{gap:6px}.nav-actions .button{padding:9px 10px;font-size:9px}.nav-user{display:none}.hero{min-height:440px}.hero-copy{padding:65px 0}.hero h1{font-size:49px}.hero-lead{font-size:12px;max-width:320px}.hero-visual{width:220px;height:220px;right:-125px;opacity:.45}.orbit-core{width:80px;height:80px;border-radius:23px}.core-a{font-size:32px}.orbit-core strong{font-size:8px}.orbit-core small{font-size:5px}.orbit-two{inset:27px}.orbit-tag{font-size:6px;padding:6px}.stats-grid{grid-template-columns:repeat(2,1fr);gap:14px}.stats-grid>div{padding-left:0;border:0}.section{padding-block:55px}.section-heading{display:block}.section-heading>p{margin-top:10px}.feature-grid{grid-template-columns:1fr}.split-section{grid-template-columns:1fr;gap:25px}.talent-grid,.campus-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.talent-card,.campus-card{padding:15px;min-height:155px}.career-banner{padding:23px}.career-mark{width:80px;height:80px;font-size:43px}.career-mark span{right:9px;top:12px;font-size:14px}.join-panel{padding:30px 15px}.footer-inner{padding-block:20px;flex-wrap:wrap}.footer-inner p{display:none}.auth-modal{padding:25px 20px}.dashboard{padding-top:35px}.dashboard-heading{display:block}.verification-panel{margin-top:18px;width:max-content;max-width:100%}.profile-strip{grid-template-columns:1fr;margin:22px 0 38px}.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.dashboard-card{padding:14px;min-height:165px}.dashboard-card strong{font-size:11px}.dashboard-card>span:not(.dash-icon){font-size:9px}.matches-panel{padding:18px;margin-top:40px}.matches-list{grid-template-columns:1fr}.module-view{padding-top:25px}.module-view-top .eyebrow{display:none}.content-grid{grid-template-columns:1fr}.module-title{font-size:32px}}
 @media(max-width:370px){.brand{font-size:11px}.nav-actions .button{padding:8px}.dashboard-grid{grid-template-columns:1fr}.talent-grid,.campus-grid{grid-template-columns:1fr}}
+
+/* ACADEX 2.2 — student profile editor */
+.profile-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+.profile-actions{display:flex;justify-content:flex-end;margin-top:-38px;margin-bottom:35px}
+.profile-editor{margin:0 0 42px;padding:24px;background:linear-gradient(145deg,#171512,#101010);border:1px solid rgba(217,173,88,.28);border-radius:15px;scroll-margin-top:85px}
+.profile-editor-heading h2{font:800 25px Manrope;margin:0 0 7px}
+.profile-editor-heading .small-note{max-width:620px;margin:0 0 20px}
+.profile-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.profile-form label{display:grid;gap:7px;font-size:10px;color:#c7bda9}
+.profile-form input,.profile-form select{width:100%;min-width:0;background:#191919;border:1px solid var(--line);border-radius:8px;padding:12px;color:var(--text);font-size:12px;outline:none}
+.profile-form input:focus,.profile-form select:focus{border-color:var(--gold)}
+.profile-wide{grid-column:1/-1}
+.field-hint{color:var(--muted);font-size:9px}
+.profile-form-actions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+.profile-form-message{grid-column:1/-1}
+@media(max-width:650px){
+  .profile-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .profile-actions{margin:0 0 22px}
+  .profile-editor{padding:18px}
+  .profile-form{grid-template-columns:1fr}
+  .profile-wide,.profile-form-actions,.profile-form-message{grid-column:1}
+}

@@ -11,6 +11,7 @@
   const authSubmit = $("#authSubmit");
   let authMode = "signup";
   let currentUser = null;
+  let studentProfile = null;
   let supabaseClient = null;
   let toastTimer;
 
@@ -148,8 +149,113 @@
     $("#studentStatus").textContent = "Student enrolment: not independently verified";
     $("#matchingMessage").textContent = `Your selected institution is ${university}. ACADEX will prioritise same-university connections, then nearby institutions, as student profiles become available.`;
     window.scrollTo({top:0,behavior:"instant"});
+    loadStudentProfile();
     loadMatches();
   }
+
+  function renderProfileSummary(profile) {
+    const fullName = safeText(profile.full_name, currentUser?.email?.split("@")[0] || "Student");
+    const university = safeText(profile.university, "University not added");
+    const department = safeText(profile.department, "Not provided");
+    const level = safeText(profile.academic_level, "Not provided");
+    const faculty = safeText(profile.faculty, "Not added");
+    const campus = safeText(profile.campus_location, "Not added");
+    const interests = Array.isArray(profile.interests) && profile.interests.length
+      ? profile.interests.join(", ") : "Not added";
+
+    $("#dashboardName").textContent = fullName.split(" ")[0];
+    $("#navUserName").textContent = fullName;
+    $("#dashboardUniversity").textContent = university + " · Your university ecosystem starts here.";
+    $("#profileUniversity").textContent = university;
+    $("#profileFaculty").textContent = faculty;
+    $("#profileDepartment").textContent = department;
+    $("#profileLevel").textContent = level;
+    $("#profileCampus").textContent = campus;
+    $("#profileInterests").textContent = interests;
+    $("#matchingMessage").textContent = `Your selected institution is ${university}. ACADEX will prioritise same-university connections; nearby-campus matching will be added when the campus directory is available.`;
+  }
+
+  async function loadStudentProfile() {
+    if (!supabaseClient || !currentUser) return;
+    const requestedUserId = currentUser.id;
+    const { data, error } = await supabaseClient
+      .from("student_profiles")
+      .select("user_id, full_name, university, faculty, department, academic_level, campus_location, interests")
+      .eq("user_id", requestedUserId)
+      .maybeSingle();
+    if (error) {
+      console.warn("Could not load ACADEX student profile:", error.message);
+      toast("Your profile could not be loaded. Please try again.");
+      return;
+    }
+    if (!data || currentUser?.id !== requestedUserId) return;
+    studentProfile = data;
+    renderProfileSummary(data);
+  }
+
+  function openProfileEditor() {
+    if (!studentProfile) {
+      toast("Your student profile is still loading. Please try again.");
+      loadStudentProfile();
+      return;
+    }
+    $("#editFullName").value = studentProfile.full_name || "";
+    $("#editUniversity").value = studentProfile.university || "";
+    $("#editFaculty").value = studentProfile.faculty || "";
+    $("#editDepartment").value = studentProfile.department || "";
+    $("#editAcademicLevel").value = studentProfile.academic_level || "";
+    $("#editCampusLocation").value = studentProfile.campus_location || "";
+    $("#editInterests").value = Array.isArray(studentProfile.interests) ? studentProfile.interests.join(", ") : "";
+    $("#profileMessage").textContent = "";
+    $("#profileEditor").classList.remove("hidden");
+    $("#profileEditor").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  $("#editProfileBtn").addEventListener("click", openProfileEditor);
+  $("#cancelProfileBtn").addEventListener("click", () => $("#profileEditor").classList.add("hidden"));
+  $("#profileForm").addEventListener("submit", async event => {
+    event.preventDefault();
+    if (!supabaseClient || !currentUser) return;
+    const saveButton = $("#saveProfileBtn");
+    const message = $("#profileMessage");
+    const interests = $("#editInterests").value.split(",").map(value => value.trim()).filter(Boolean).slice(0,20);
+    const updated = {
+      user_id: currentUser.id,
+      full_name: $("#editFullName").value.trim(),
+      university: $("#editUniversity").value.trim(),
+      faculty: $("#editFaculty").value.trim() || null,
+      department: $("#editDepartment").value.trim(),
+      academic_level: $("#editAcademicLevel").value,
+      campus_location: $("#editCampusLocation").value.trim() || null,
+      interests,
+      updated_at: new Date().toISOString()
+    };
+    if (!updated.full_name || !updated.university || !updated.department || !updated.academic_level) {
+      message.textContent = "Complete your name, university, department and academic level.";
+      return;
+    }
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving…";
+    message.textContent = "";
+    try {
+      const { data, error } = await supabaseClient
+        .from("student_profiles")
+        .upsert(updated, {onConflict:"user_id"})
+        .select("user_id, full_name, university, faculty, department, academic_level, campus_location, interests")
+        .single();
+      if (error) throw error;
+      studentProfile = data;
+      renderProfileSummary(data);
+      $("#profileEditor").classList.add("hidden");
+      toast("Student profile updated successfully.");
+    } catch (error) {
+      console.error("ACADEX profile update failed:", error);
+      message.textContent = error.message || "Could not save your profile. Please try again.";
+    } finally {
+      saveButton.disabled = false;
+      saveButton.textContent = "Save profile";
+    }
+  });
 
   function renderModule(key) {
     const data = modules[key];
