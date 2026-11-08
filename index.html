@@ -17,20 +17,21 @@
       <a class="brand" href="#home" aria-label="ACADEX home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a>
       <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
       <nav class="main-nav" id="mainNav">
-        <a href="#opportunities">Opportunities</a>
-        <a href="#library">Library</a>
-        <a href="#talent">Talent</a>
-        <a href="#campus">Campus Life</a>
-        <a href="#career">Career</a>
+        <a href="#opportunities">Opportunities</a><a href="#library">Library</a><a href="#talent">Talent</a><a href="#campus">Campus Life</a><a href="#career">Career</a>
       </nav>
-      <div class="nav-actions">
+      <div class="nav-actions" id="publicNav">
         <button class="button button-quiet" data-open-auth="login">Log in</button>
         <button class="button button-gold" data-open-auth="signup">Join ACADEX</button>
       </div>
+      <div class="nav-actions hidden" id="studentNav">
+        <span class="nav-user" id="navUserName"></span>
+        <button class="button button-quiet" id="logoutBtn">Log out</button>
+      </div>
     </div>
   </header>
-  <main id="home">
-    <section class="hero container">
+
+  <main id="welcomePage">
+    <section class="hero container" id="home">
       <div class="hero-copy">
         <p class="eyebrow">THE NIGERIAN STUDENT ECOSYSTEM</p>
         <h1>Your campus.<br><span class="gold">Your future.</span></h1>
@@ -42,80 +43,88 @@
         <div class="hero-proof"><span class="proof-dot"></span> Built around the full student experience</div>
       </div>
       <div class="hero-visual" aria-label="ACADEX student ecosystem overview">
-        <div class="visual-glow"></div>
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="visual-glow"></div><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
         <div class="orbit-core"><span class="core-a">A</span><strong>ACADEX</strong><small>STUDENT ECOSYSTEM</small></div>
-        <div class="orbit-tag tag-one">ACADEMICS</div>
-        <div class="orbit-tag tag-two">OPPORTUNITIES</div>
-        <div class="orbit-tag tag-three">TALENT</div>
-        <div class="orbit-tag tag-four">CAMPUS LIFE</div>
+        <div class="orbit-tag tag-one">ACADEMICS</div><div class="orbit-tag tag-two">OPPORTUNITIES</div><div class="orbit-tag tag-three">TALENT</div><div class="orbit-tag tag-four">CAMPUS LIFE</div>
       </div>
     </section>
-    <section class="stats-strip">
-      <div class="container stats-grid">
-        <div><strong>01</strong><span>Student-first</span></div>
-        <div><strong>02</strong><span>Multi-campus vision</span></div>
-        <div><strong>03</strong><span>Opportunity-led</span></div>
-        <div><strong>04</strong><span>Built to grow</span></div>
-      </div>
-    </section>
+    <section class="stats-strip"><div class="container stats-grid">
+      <div><strong>01</strong><span>Student-first</span></div><div><strong>02</strong><span>Multi-campus vision</span></div><div><strong>03</strong><span>Opportunity-led</span></div><div><strong>04</strong><span>Built to grow</span></div>
+    </div></section>
     <section class="section container" id="opportunities">
       <div class="section-heading"><div><p class="eyebrow">MOVE FORWARD</p><h2>Opportunity <span class="gold">Hub</span></h2></div><p>Discover opportunities that can take your education and career further.</p></div>
       <div class="feature-grid">
-        <article class="feature-card"><span class="feature-icon">✦</span><h3>Scholarships & Grants</h3><p>Find funding opportunities and educational support.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
-        <article class="feature-card"><span class="feature-icon">⌁</span><h3>Internships & Jobs</h3><p>Discover work experience, internships and entry-level roles.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
-        <article class="feature-card"><span class="feature-icon">◇</span><h3>Competitions & Programs</h3><p>Find challenges, fellowships, bootcamps and development programs.</p><a href="#join" class="text-link">Explore opportunities ↗</a></article>
+        <article class="feature-card"><span class="feature-icon">✦</span><h3>Scholarships & Grants</h3><p>Find funding opportunities and educational support.</p></article>
+        <article class="feature-card"><span class="feature-icon">⌁</span><h3>Internships & Jobs</h3><p>Discover work experience, internships and entry-level roles.</p></article>
+        <article class="feature-card"><span class="feature-icon">◇</span><h3>Competitions & Programs</h3><p>Find challenges, fellowships, bootcamps and development programs.</p></article>
       </div>
     </section>
-    <section class="section section-soft" id="library">
-      <div class="container split-section">
-        <div><p class="eyebrow">LEARN WITHOUT LIMITS</p><h2>Academic <span class="gold">Library</span></h2><p class="section-lead">A structured academic resource directory for students across Nigerian universities — organised around institutions, departments and courses.</p><ul class="check-list"><li>Course resources and study materials</li><li>Past questions and revision resources</li><li>Research guidance and academic references</li><li>Educational videos and learning links</li></ul><p class="small-note">Resources should be uploaded with permission or linked from legitimate sources.</p></div>
-        <div class="library-panel"><div class="panel-top"><span>ACADEMIC LIBRARY</span><span class="panel-status">RESOURCE DIRECTORY</span></div><div class="library-search"><span>⌕</span><span>Search courses, departments or resources</span></div><div class="course-row"><span class="course-icon">01</span><div><b>Course materials</b><small>Organised learning resources</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">02</span><div><b>Past questions</b><small>Revision and exam preparation</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">03</span><div><b>Research resources</b><small>Guides, references and learning links</small></div><span class="row-arrow">↗</span></div></div>
-      </div>
+    <section class="section section-soft" id="library"><div class="container split-section">
+      <div><p class="eyebrow">LEARN WITHOUT LIMITS</p><h2>Academic <span class="gold">Library</span></h2><p class="section-lead">A structured academic resource directory for students across Nigerian universities — organised around institutions, departments and courses.</p><ul class="check-list"><li>Course resources and study materials</li><li>Past questions and revision resources</li><li>Research guidance and academic references</li><li>Educational videos and learning links</li></ul><p class="small-note">Resources should be uploaded with permission or linked from legitimate sources.</p></div>
+      <div class="library-panel"><div class="panel-top"><span>ACADEMIC LIBRARY</span><span class="panel-status">RESOURCE DIRECTORY</span></div><div class="library-search">⌕ <span>Search courses, departments or resources</span></div><div class="course-row"><span class="course-icon">01</span><div><b>Course materials</b><small>Organised learning resources</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">02</span><div><b>Past questions</b><small>Revision and exam preparation</small></div><span class="row-arrow">↗</span></div><div class="course-row"><span class="course-icon">03</span><div><b>Research resources</b><small>Guides, references and learning links</small></div><span class="row-arrow">↗</span></div></div>
+    </div></section>
+    <section class="section container" id="talent"><div class="section-heading"><div><p class="eyebrow">SKILLS MEET OPPORTUNITY</p><h2>Talent <span class="gold">Exchange</span></h2></div><p>Help students turn their abilities into experience, collaboration and professional growth.</p></div>
+      <div class="talent-grid"><article class="talent-card"><span>⌘</span><h3>Coders & Developers</h3><p>Showcase projects, find collaborators and join technical teams.</p></article><article class="talent-card"><span>▧</span><h3>Graphic Designers</h3><p>Display creative work and connect with people who need design skills.</p></article><article class="talent-card"><span>✎</span><h3>Writers & Researchers</h3><p>Build a portfolio and collaborate on writing and research projects.</p></article><article class="talent-card"><span>▶</span><h3>Content Creators</h3><p>Share educational content and connect with other creators.</p></article></div>
     </section>
-    <section class="section container" id="talent">
-      <div class="section-heading"><div><p class="eyebrow">SKILLS MEET OPPORTUNITY</p><h2>Talent <span class="gold">Exchange</span></h2></div><p>Help students turn their abilities into experience, collaboration and professional growth.</p></div>
-      <div class="talent-grid">
-        <article class="talent-card"><span>⌘</span><h3>Coders & Developers</h3><p>Showcase projects, find collaborators and join technical teams.</p></article>
-        <article class="talent-card"><span>▧</span><h3>Graphic Designers</h3><p>Display creative work and connect with people who need design skills.</p></article>
-        <article class="talent-card"><span>✎</span><h3>Writers & Researchers</h3><p>Build a portfolio and collaborate on writing and research projects.</p></article>
-        <article class="talent-card"><span>▶</span><h3>Content Creators</h3><p>Share educational content and connect with other creators.</p></article>
-      </div>
-    </section>
-    <section class="section section-soft" id="campus">
-      <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">MORE THAN THE CLASSROOM</p><h2>Campus <span class="gold">Life</span></h2></div><p>Connect with the wider activities and services that make up university life.</p></div>
-        <div class="campus-grid">
-          <article class="campus-card"><span>◎</span><h3>Campus Connect</h3><p>Student networking, communities and peer connections.</p></article>
-          <article class="campus-card"><span>▤</span><h3>Events & Communities</h3><p>Campus events, student groups and shared interests.</p></article>
-          <article class="campus-card"><span>⌂</span><h3>Campus Marketplace</h3><p>A directory for student businesses, products and services.</p></article>
-          <article class="campus-card"><span>⌖</span><h3>Innovation & Research</h3><p>Showcase ideas, projects, research and collaboration.</p></article>
-        </div>
-      </div>
-    </section>
-    <section class="section container" id="career">
-      <div class="career-banner"><div><p class="eyebrow">PREPARE FOR WHAT'S NEXT</p><h2>Build your path<br><span class="gold">beyond campus.</span></h2><p>Career development, professional portfolios, mentorship and connections to the world of work.</p></div><div class="career-mark">A<span>↗</span></div></div>
-    </section>
-    <section class="section container" id="join">
-      <div class="join-panel"><p class="eyebrow">THE FOUNDATION STARTS HERE</p><h2>Be part of the <span class="gold">ACADEX</span> ecosystem.</h2><p>Create a student profile to begin exploring the platform as it develops.</p><button class="button button-gold" data-open-auth="signup">Create your profile ↗</button><p class="small-note">ACADEX is being developed in phases. Some areas are currently previews and may not yet contain live listings or transactions.</p></div>
-    </section>
+    <section class="section section-soft" id="campus"><div class="container">
+      <div class="section-heading"><div><p class="eyebrow">MORE THAN THE CLASSROOM</p><h2>Campus <span class="gold">Life</span></h2></div><p>Connect with the wider activities and services that make up university life.</p></div>
+      <div class="campus-grid"><article class="campus-card"><span>◎</span><h3>Campus Connect</h3><p>Student networking, communities and peer connections.</p></article><article class="campus-card"><span>▤</span><h3>Events & Communities</h3><p>Campus events, student groups and shared interests.</p></article><article class="campus-card"><span>⌂</span><h3>Campus Marketplace</h3><p>A directory for student businesses, products and services.</p></article><article class="campus-card"><span>⌖</span><h3>Innovation & Research</h3><p>Showcase ideas, projects, research and collaboration.</p></article></div>
+    </div></section>
+    <section class="section container" id="career"><div class="career-banner"><div><p class="eyebrow">PREPARE FOR WHAT'S NEXT</p><h2>Build your path<br><span class="gold">beyond campus.</span></h2><p>Career development, professional portfolios, mentorship and connections to the world of work.</p></div><div class="career-mark">A<span>↗</span></div></div></section>
+    <section class="section container" id="join"><div class="join-panel"><p class="eyebrow">THE FOUNDATION STARTS HERE</p><h2>Be part of the <span class="gold">ACADEX</span> ecosystem.</h2><p>Create a student profile to begin exploring the platform as it develops.</p><button class="button button-gold" data-open-auth="signup">Create your profile ↗</button><p class="small-note">ACADEX is being developed in phases. Some areas are previews and may not yet contain live listings or transactions.</p></div></section>
   </main>
+
+  <main id="studentDashboard" class="container dashboard hidden">
+    <section class="dashboard-heading">
+      <div><p class="eyebrow">YOUR STUDENT SPACE</p><h1>Welcome, <span class="gold" id="dashboardName">Student</span></h1><p id="dashboardUniversity" class="dashboard-subtitle">Your university ecosystem starts here.</p></div>
+      <div class="verification-panel"><span class="status-dot" id="emailStatusDot"></span><div><strong id="emailStatus">Checking email status</strong><small id="studentStatus">Student verification: not yet confirmed</small></div></div>
+    </section>
+    <section class="profile-strip">
+      <div><span class="profile-label">UNIVERSITY</span><strong id="profileUniversity">—</strong></div>
+      <div><span class="profile-label">DEPARTMENT</span><strong id="profileDepartment">—</strong></div>
+      <div><span class="profile-label">LEVEL</span><strong id="profileLevel">—</strong></div>
+    </section>
+    <div class="section-heading dashboard-section-heading"><div><p class="eyebrow">YOUR ACADEMIC ECOSYSTEM</p><h2>Explore your <span class="gold">ACADEX</span></h2></div><p>Choose a space to get started.</p></div>
+    <div class="dashboard-grid" id="dashboardGrid">
+      <button class="dashboard-card" data-module="library"><span class="dash-icon">▤</span><strong>Academic Library</strong><span>Course materials, past questions and research resources.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="opportunities"><span class="dash-icon">✦</span><strong>Opportunity Hub</strong><span>Scholarships, grants, internships and competitions.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="talent"><span class="dash-icon">⌘</span><strong>Talent Exchange</strong><span>Showcase skills and find student collaborators.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="innovation"><span class="dash-icon">⌖</span><strong>Innovation & Research</strong><span>Share ideas, projects and research interests.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="marketplace"><span class="dash-icon">⌂</span><strong>Campus Marketplace</strong><span>Discover student businesses, products and services.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="events"><span class="dash-icon">▧</span><strong>Events & Communities</strong><span>Find campus activities, clubs and communities.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="campus"><span class="dash-icon">◎</span><strong>Campus Connect</strong><span>Meet students at your institution and nearby campuses.</span><i>Explore ↗</i></button>
+      <button class="dashboard-card" data-module="career"><span class="dash-icon">↗</span><strong>Career Centre</strong><span>Build your CV, portfolio and career readiness.</span><i>Explore ↗</i></button>
+    </div>
+    <section class="matches-panel"><div><p class="eyebrow">GROW YOUR NETWORK</p><h2>University <span class="gold">Connections</span></h2><p id="matchingMessage">Your student profile will help ACADEX organise relevant campus connections.</p></div><button class="button button-outline" id="refreshMatches">Refresh connections</button><div id="matchesList" class="matches-list"><p class="small-note">Student matching becomes available after the database setup is completed.</p></div></section>
+    <div class="dashboard-footer"><span>ACADEX · Learning. Opportunity. Talent. Campus.</span><button class="text-button" id="dashboardLogout">Log out</button></div>
+  </main>
+
+  <section id="moduleView" class="container module-view hidden">
+    <div class="module-view-top"><button class="back-btn" id="backToDashboard">← Back to dashboard</button><span class="eyebrow">ACADEX STUDENT ECOSYSTEM</span></div>
+    <div id="moduleContent"></div>
+  </section>
+
   <footer class="site-footer"><div class="container footer-inner"><a class="brand" href="#home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a><p>Learning. Opportunity. Talent. Campus.</p><span>© <span id="year"></span> ACADEX</span></div></footer>
+
   <div class="modal-backdrop" id="authModal" hidden>
     <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
       <button class="modal-close" id="closeAuth" aria-label="Close">×</button>
       <p class="eyebrow">ACADEX STUDENT ACCOUNT</p><h2 id="authTitle">Join the ecosystem</h2>
       <p class="auth-intro" id="authIntro">Create your student account to get started.</p>
       <form id="authForm">
-        <label id="nameLabel">Full name<input id="fullName" autocomplete="name" placeholder="Your full name"></label>
-        <label id="universityLabel">University / institution<input id="university" placeholder="e.g institution"></label>
+        <div id="signupFields">
+          <label>Full name<input id="fullName" autocomplete="name" placeholder="Your full name" required></label>
+          <label>University / institution<input id="university" autocomplete="organization" placeholder="e.g. Yaba College of Technology" required></label>
+          <label>Department<input id="department" placeholder="e.g. Surveying and Geoinformatics" required></label>
+          <label>Academic level<select id="academicLevel" required><option value="">Select your level</option><option>ND 1</option><option>ND 2</option><option>HND 1</option><option>HND 2</option><option>100 Level</option><option>200 Level</option><option>300 Level</option><option>400 Level</option><option>500 Level</option><option>Postgraduate</option><option>Other</option></select></label>
+        </div>
         <label>Email address<input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
         <label>Password<input id="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required></label>
         <button class="button button-gold auth-submit" id="authSubmit" type="submit">Create account</button>
-        <p class="form-message" id="authMessage" role="status"></p>
+        <p class="form-message" id="authMessage" role="status" aria-live="polite"></p>
       </form>
       <p class="auth-switch" id="authSwitch">Already registered? <button type="button" data-switch-auth="login">Log in</button></p>
-      <p class="small-note">Account creation requires the ACADEX Supabase project to be configured. Never enter a password unless you trust this website.</p>
+      <p class="small-note">Any valid email address is accepted. Email verification confirms control of the email, not university enrolment.</p>
     </section>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
