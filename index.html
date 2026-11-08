@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#090909">
   <meta name="description" content="ACADEX — the Nigerian student ecosystem for academics, opportunities, talent and campus life.">
-  <title>ACADEX 2.2 — Your Campus. Your Future.</title>
+  <title>ACADEX 2.3 — Your Campus. Your Future.</title>
+  <meta name="robots" content="noindex,nofollow">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
@@ -122,7 +123,12 @@
     <div id="moduleContent"></div>
   </section>
 
-  <footer class="site-footer"><div class="container footer-inner"><a class="brand" href="#home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a><p>Learning. Opportunity. Talent. Campus.</p><span>© <span id="year"></span> ACADEX</span></div></footer>
+  <footer class="site-footer"><div class="container footer-inner">
+    <a class="brand" href="#home"><span class="brand-mark">A</span><span>ACA<span class="gold">DEX</span></span></a>
+    <p>Learning. Opportunity. Talent. Campus.</p>
+    <div class="footer-legal"><button class="text-button" data-legal="privacy">Privacy Policy</button><button class="text-button" data-legal="terms">Terms of Service</button></div>
+    <span>ACADEX™ · Owned by AE&amp;co. · A product of AE&amp;co. · © 2026 AE&amp;co. All rights reserved.</span>
+  </div></footer>
 
   <div class="modal-backdrop" id="authModal" hidden>
     <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
@@ -145,6 +151,22 @@
       <p class="small-note">Any valid email address is accepted. Email verification confirms control of the email, not university enrolment.</p>
     </section>
   </div>
+
+  <div class="modal-backdrop" id="legalModal" hidden>
+    <section class="auth-modal legal-modal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+      <button class="modal-close" data-close-modal="legalModal" aria-label="Close">×</button>
+      <p class="eyebrow">AE&amp;CO. · ACADEX™</p><h2 id="legalTitle">ACADEX policy</h2>
+      <div id="legalContent" class="legal-content"></div>
+    </section>
+  </div>
+  <aside class="support-widget" aria-label="ACADEX customer support">
+    <section class="support-panel hidden" id="supportPanel">
+      <div class="support-head"><div><strong>ACADEX Support</strong><small>Preview assistant · FAQ only</small></div><button id="supportClose" aria-label="Close support">×</button></div>
+      <div class="support-messages" id="supportMessages"><p class="support-bubble">Hi! 👋 I can help with accounts, profiles, marketplace previews, privacy and support contacts.</p></div>
+      <form id="supportForm" class="support-form"><input id="supportInput" maxlength="300" placeholder="Ask a question…" aria-label="Ask ACADEX support" required><button type="submit" aria-label="Send">➤</button></form>
+    </section>
+    <button class="support-launch" id="supportLaunch" type="button" aria-expanded="false">✦ <span>Help</span></button>
+  </aside>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
